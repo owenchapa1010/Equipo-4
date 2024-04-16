@@ -1,0 +1,159 @@
+import java.util.Scanner;
+import java.time.LocalTime;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        Empleado empleado1 = new Empleado(1, "Juan", "Programador", 500.0f, 50.0f, LocalTime.of(8, 0), LocalTime.of(17, 0));
+        Empleado empleado2 = new Empleado(2, "Maria", "Analista", 600.0f, 60.0f, LocalTime.of(9, 0), LocalTime.of(18, 0));
+        
+        boolean salir = false;
+        do {
+            System.out.println("Bienvenido al sistema de RRHH");
+            System.out.println("Seleccione el tipo de usuario:");
+            System.out.println("1. Administrador");
+            System.out.println("2. Empleado");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opción: ");
+            
+            int tipoUsuario = scanner.nextInt();
+            
+            switch (tipoUsuario) {
+                case 1:
+                    loginAdministrador();
+                    break;
+                case 2:
+                    loginEmpleado(empleado1); // Puedes pasar aquí el objeto empleado deseado
+                    break;
+                case 0:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
+            }
+        } while (!salir);
+        
+        scanner.close(); 
+    }
+    
+    private static void loginAdministrador() {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Ingrese su nombre de usuario de administrador: ");
+        String usuarioAdmin = scanner.nextLine();
+        // Aquí puedes agregar la lógica para solicitar la contraseña del administrador
+        System.out.println("Bienvenido, Administrador");
+        System.out.println("Menú:");
+        System.out.println("1. Mostrar faltas");
+        System.out.println("2. Mostrar asistencias");
+        System.out.println("3. Mostrar bonos y descuentos");
+        System.out.println("4. Imprimir Reguistro");
+        System.out.print("Seleccione una opción: ");
+        
+        int opcionAdmin = scanner.nextInt();
+        
+        switch (opcionAdmin) {
+            case 1:
+                System.out.println("Opción 1: Modificar información");
+                // Aquí puedes colocar el código para modificar información
+                break;
+            case 2:
+                System.out.println("Opción 2: Mostrar faltas");
+                // Aquí puedes colocar el código para mostrar faltas
+                break;
+            case 3:
+                System.out.println("Opción 3: Mostrar asistencias");
+                // Aquí puedes colocar el código para mostrar asistencias
+                break;
+            case 4:
+                System.out.println("Opción 4: Mostrar bonos y descuentos");
+                // Aquí puedes colocar el código para mostrar bonos y descuentos
+                break;
+            default:
+                System.out.println("Opción no válida");
+                break;
+        }
+        
+        scanner.close();
+    }
+    
+    private static void loginEmpleado(Empleado empleado) {
+        Scanner scanner = new Scanner(System.in);
+        
+        boolean salir = false;
+        do {
+            System.out.println("Bienvenido, " + empleado.getNombre());
+            System.out.println("Menú:");
+            System.out.println("1. Mostrar descuentos");
+            System.out.println("2. Mostrar entradas y salidas");
+            System.out.println("3. Mostrar bono");
+            System.out.println("4. Realizar registro de entrada");
+            System.out.println("5. Realizar registro de salida");
+            System.out.println("0. Volver al menú principal");
+            System.out.print("Seleccione una opción: ");
+            
+            int opcionEmpleado = scanner.nextInt();
+            
+            switch (opcionEmpleado) {
+                case 1:
+                    System.out.println("Opción 1: Mostrar descuentos");
+                    // Aquí puedes colocar el código para mostrar descuentos
+                    break;
+                case 2:
+                    System.out.println("Opción 2: Mostrar entradas y salidas");
+                    System.out.println("1. Registro de entrada");
+                    System.out.println("2. Registro de salida");
+                    System.out.println("0. Volver al menú principal");
+                    System.out.print("Seleccione una opción: ");
+                    int opcionRegistro = scanner.nextInt();
+                    switch (opcionRegistro) {
+                        case 1:
+                            registrarEntrada(empleado);
+                            break;
+                        case 2:
+                            registrarSalida(empleado);
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            System.out.println("Opción no válida");
+                            break;
+                    }
+                    break;
+                case 3:
+                    System.out.println("Opción 3: Mostrar bono");
+                    // Aquí puedes colocar el código para mostrar bono
+                    break;
+                case 4:
+                    System.out.println("Opción 4: Realizar registro de entrada");
+                    registrarEntrada(empleado);
+                    break;
+                case 5:
+                    System.out.println("Opción 5: Realizar registro de salida");
+                    registrarSalida(empleado);
+                    break;
+                case 0:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
+            }
+        } while (!salir);
+        
+        scanner.close();
+    }
+    
+    private static void registrarEntrada(Empleado empleado) {
+        // Aquí se puede colocar la lógica para registrar la entrada del empleado
+        System.out.println("Se ha registrado la entrada de " + empleado.getNombre() + " a las " + LocalTime.now());
+    }
+    
+    
+    private static void registrarSalida(Empleado empleado) {
+        // Aquí se puede colocar la lógica para registrar la salida del empleado
+        System.out.println("Se ha registrado la salida de " + empleado.getNombre() + " a las " + LocalTime.now());
+    }
+}
