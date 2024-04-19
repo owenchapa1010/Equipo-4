@@ -4,7 +4,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Empleado {
+public class Empleado { 
     private Nodo_Empleado inicio;
     private Nodo_Empleado fin;
 
