@@ -1,0 +1,329 @@
+package reursos_humanos;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Empleado {
+    private Nodo_Empleado inicio;
+    private Nodo_Empleado fin;
+
+    public Empleado() {
+        this.inicio = null;
+        this.fin = null;
+    }
+
+    public Nodo_Empleado getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Nodo_Empleado inicio) {
+        this.inicio = inicio;
+    }
+
+    public Nodo_Empleado getFin() {
+        return fin;
+    }
+
+    public void setFin(Nodo_Empleado fin) {
+        this.fin = fin;
+    }
+    
+    @Override
+    public String toString() {
+        return "Empleado{" + "inicio=" + inicio + ", fin=" + fin + '}';
+    }
+
+    public void registrarEmpleado() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese su nombre: ");
+        String nombreEmp = scanner.nextLine();
+
+        System.out.print("Ingrese su cargo: ");
+        String cargo = scanner.nextLine();
+
+        System.out.print("Ingrese su ID: ");
+        int id = scanner.nextInt();
+
+        scanner.nextLine(); // Consumir la nueva línea en blanco después de nextInt()
+
+        // Crear un nuevo Nodo_Empleado para almacenar los datos del empleado
+        Nodo_Empleado nuevoEmpleado = new Nodo_Empleado(id, nombreEmp, cargo, 0.0f, 0.0f, new LocalTime[6], new LocalTime[6]);
+
+        // Insertar el nuevo nodo en la lista enlazada
+        if (inicio == null) {
+            inicio = nuevoEmpleado;
+            fin = nuevoEmpleado;
+        } else {
+            fin.setSiguiente(nuevoEmpleado);
+            fin = nuevoEmpleado;
+        }
+
+        System.out.println("Empleado registrado exitosamente.");
+    }
+    
+public void registrarEntradaOSalidaPorID(int idEmpleado) {
+    Scanner scanner = new Scanner(System.in);
+    Nodo_Empleado empleado = buscarEmpleadoPorID(idEmpleado);
+
+    if (empleado == null) {
+        System.out.println("No se encontró ningún empleado con el ID especificado.");
+        return;
+    }
+
+    String[] diasSemana = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+
+    System.out.println("Empleado encontrado. ¿Desea registrar la entrada (E) o la salida (S)?");
+    String opcion = scanner.nextLine().trim().toLowerCase();
+
+    if (!opcion.equals("e") && !opcion.equals("s")) {
+        System.out.println("Opción no válida. Por favor, ingrese 'E' para entrada o 'S' para salida.");
+        return;
+    }
+
+    String accion = opcion.equals("e") ? "entrada" : "salida";
+
+System.out.println("Ingrese el día de la semana para registrar la " + accion + ":");
+String diaSeleccionado = scanner.nextLine().trim(); // Eliminar toLowerCase()
+int indexDia = Arrays.asList(diasSemana).indexOf(diaSeleccionado);
+
+if (indexDia == -1) {
+    System.out.println("Día de la semana no válido.");
+    return;
+}
+
+
+    System.out.println("Ingrese la hora de " + accion + " para el " + diaSeleccionado + " (formato HH:MM): ");
+    String horaStr = scanner.nextLine();
+    try {
+        LocalTime hora = LocalTime.parse(horaStr);
+        if (opcion.equals("e")) {
+            empleado.getHorasEntrada()[indexDia] = hora;
+        } else {
+            empleado.getHorasSalida()[indexDia] = hora;
+        }
+        System.out.println("Hora de " + accion + " registrada exitosamente para el " + diaSeleccionado + " del empleado con ID " + idEmpleado + ".");
+    } catch (DateTimeParseException e) {
+        System.out.println("Formato de hora incorrecto. Por favor, ingrese la hora en formato HH:MM.");
+    }
+}
+
+    
+        private Nodo_Empleado buscarEmpleadoPorID(int idEmpleado) {
+        Nodo_Empleado actual = inicio;
+        while (actual != null) {
+            if (actual.getId() == idEmpleado) {
+                return actual;
+            }
+            actual = actual.getSiguiente();
+        }
+        return null;
+    }
+
+    public void mostrarHorariosPorID(int idEmpleado) {
+        Nodo_Empleado actual = inicio;
+        boolean encontrado = false;
+
+        while (actual != null) {
+            if (actual.getId() == idEmpleado) {
+                encontrado = true;
+                break;
+            }
+            actual = actual.getSiguiente();
+        }
+
+        if (encontrado) {
+            System.out.println("Horarios de entrada y salida para el empleado con ID " + idEmpleado + ":");
+            System.out.println("Día\tHora de Entrada\tHora de Salida");
+
+            LocalTime[] horasEntrada = actual.getHorasEntrada();
+            LocalTime[] horasSalida = actual.getHorasSalida();
+            String[] diasSemana = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+
+            if (horasEntrada != null && horasSalida != null && horasEntrada.length == horasSalida.length) {
+                for (int i = 0; i < horasEntrada.length; i++) {
+                    System.out.println(diasSemana[i] + "\t" + (horasEntrada[i] != null ? horasEntrada[i] : "Sin registro") + "\t\t" + (horasSalida[i] != null ? horasSalida[i] : "Sin registro"));
+                }
+            } else {
+                System.out.println("No se encontraron registros de horarios para este empleado.");
+            }
+        } else {
+            System.out.println("No se encontró ningún empleado con el ID especificado.");
+        }
+    }
+
+    public void mostrarEmpleadoPorID(int idEmpleado) {
+        Nodo_Empleado actual = inicio;
+        boolean encontrado = false;
+
+        while (actual != null) {
+            if (actual.getId() == idEmpleado) {
+                encontrado = true;
+                break;
+            }
+            actual = actual.getSiguiente();
+        }
+
+        if (encontrado) {
+            System.out.println("Información del empleado con ID " + idEmpleado + ":");
+            System.out.println("Nombre: " + actual.getNombre());
+            System.out.println("Cargo: " + actual.getCargo());
+            System.out.println("Bono: " + actual.getBono());
+            System.out.println("Descuento: " + actual.getDescuento());
+            System.out.println("Horarios de entrada y salida:");
+
+            LocalTime[] horasEntrada = actual.getHorasEntrada();
+            LocalTime[] horasSalida = actual.getHorasSalida();
+            String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+
+            if (horasEntrada != null && horasSalida != null && horasEntrada.length == horasSalida.length) {
+                System.out.println("Día\tHora de Entrada\tHora de Salida");
+                for (int i = 0; i < horasEntrada.length; i++) {
+                    System.out.println(diasSemana[i] + "\t" + (horasEntrada[i] != null ? horasEntrada[i] : "Sin registro") + "\t\t" + (horasSalida[i] != null ? horasSalida[i] : "Sin registro"));
+                }
+            } else {
+                System.out.println("No se encontraron registros de horarios para este empleado.");
+            }
+        } else {
+            System.out.println("No se encontró ningún empleado con el ID especificado.");
+        }
+    }
+
+    public void mostrarListaEmpleados() {
+        if (inicio == null) {
+            System.out.println("No hay empleados en la lista.");
+            return;
+        }
+
+        Nodo_Empleado actual = inicio;
+        System.out.println("Lista de Empleados:");
+        while (actual != null) {
+            System.out.println("ID: " + actual.getId());
+            System.out.println("Nombre: " + actual.getNombre());
+            System.out.println("Cargo: " + actual.getCargo());
+            System.out.println("Bono: " + actual.getBono());
+            System.out.println("Descuento: " + actual.getDescuento());
+            System.out.println("Horas de entrada: " + Arrays.toString(actual.getHorasEntrada()));
+            System.out.println("Horas de salida: " + Arrays.toString(actual.getHorasSalida()));
+            System.out.println("-------------------------");
+            actual = actual.getSiguiente();
+        }
+    }
+
+    public void mostrarBonosYDescuentosPorID(int idEmpleado) {
+        Nodo_Empleado actual = inicio;
+        boolean encontrado = false;
+
+        while (actual != null) {
+            if (actual.getId() == idEmpleado) {
+                encontrado = true;
+                break;
+            }
+            actual = actual.getSiguiente();
+        }
+
+        if (encontrado) {
+            System.out.println("Bonos y descuentos para el empleado con ID " + idEmpleado + ":");
+
+            if (actual.getBono() > 0) {
+                System.out.println("Bono: $" + actual.getBono());
+            } else {
+                System.out.println("No hay bono registrado para este empleado.");
+            }
+
+            if (actual.getDescuento() > 0) {
+                System.out.println("Descuento: $" + actual.getDescuento());
+            } else {
+                System.out.println("No hay descuento registrado para este empleado.");
+            }
+        } else {
+            System.out.println("No se encontró ningún empleado con el ID especificado.");
+        }
+    }
+
+    public void imprimirBonosYDescuentos() {
+        if (inicio == null) {
+            System.out.println("No hay empleados en la lista.");
+            return;
+        }
+
+        Nodo_Empleado actual = inicio;
+        System.out.println("Bonos y Descuentos de Empleados:");
+        while (actual != null) {
+            System.out.println("ID: " + actual.getId());
+            System.out.println("Nombre: " + actual.getNombre());
+            System.out.println("Bono: $" + actual.getBono());
+            System.out.println("Descuento: $" + actual.getDescuento());
+            System.out.println("-------------------------");
+            actual = actual.getSiguiente();
+        }
+    }
+
+    public void imprimirEntradasYSalidas() {
+        if (inicio == null) {
+            System.out.println("No hay empleados en la lista.");
+            return;
+        }
+
+        Nodo_Empleado actual = inicio;
+        System.out.println("Entradas y Salidas de Empleados:");
+        while (actual != null) {
+            System.out.println("ID: " + actual.getId());
+            System.out.println("Nombre: " + actual.getNombre());
+            System.out.println("Horas de entrada: " + Arrays.toString(actual.getHorasEntrada()));
+            System.out.println("Horas de salida: " + Arrays.toString(actual.getHorasSalida()));
+            System.out.println("-------------------------");
+            actual = actual.getSiguiente();
+        }
+    }
+
+        public void calcularBonosYDescuentos() {
+        Nodo_Empleado actual = inicio;
+
+        while (actual != null) {
+            float bono = 0.0f;
+            float descuento = 0.0f;
+
+            // Iterar sobre los horarios de entrada y salida
+            LocalTime[] horasEntrada = actual.getHorasEntrada();
+            LocalTime[] horasSalida = actual.getHorasSalida();
+            for (int i = 0; i < horasEntrada.length; i++) {
+                if (horasEntrada[i] != null && horasSalida[i] != null) {
+                    // Calcular la diferencia en horas entre la hora de entrada y salida
+                    long diffMinutes = java.time.Duration.between(horasEntrada[i], horasSalida[i]).toMinutes();
+                    float diffHours = (float) diffMinutes / 60;
+
+                    // Verificar si llegó antes o a las 8 am
+                    if (horasEntrada[i].isBefore(LocalTime.of(8, 0)) || horasEntrada[i].equals(LocalTime.of(8, 0))) {
+                        bono += 0.1 * 3000; // Agregar bono del 10%
+                    }
+
+                    // Verificar si llegó después de las 8 am
+                    if (horasEntrada[i].isAfter(LocalTime.of(8, 0))) {
+                        if (horasEntrada[i].isBefore(LocalTime.of(8, 5)) || horasEntrada[i].equals(LocalTime.of(8, 5))) {
+                            descuento += 0.05 * 500; // Descuento del 5%
+                        } else if (horasEntrada[i].isBefore(LocalTime.of(8, 10)) || horasEntrada[i].equals(LocalTime.of(8, 10))) {
+                            descuento += 0.1 * 500; // Descuento del 10%
+                        } else {
+                            descuento += 0.15 * 500; // Descuento del 15%
+                        }
+                    }
+
+                    // Verificar si salió antes de las 4 pm
+                    if (horasSalida[i].isBefore(LocalTime.of(16, 0))) {
+                        descuento += 100 * (4 - diffHours); // Descuento por cada hora antes de las 4 pm
+                    }
+                }
+            }
+
+            actual.setBono(bono);
+            actual.setDescuento(descuento);
+
+            actual = actual.getSiguiente();
+        }
+
+        System.out.println("Bonos y descuentos calculados exitosamente para todos los empleados.");
+    }
+
+}
