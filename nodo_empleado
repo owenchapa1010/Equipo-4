@@ -1,0 +1,95 @@
+package reursos_humanos;
+
+import java.time.LocalTime;
+import java.util.Arrays;
+
+public class Nodo_Empleado {
+   private int id;
+   private String nombre;
+   private String cargo;
+   private Float bono;
+   private Float descuento;
+   private LocalTime[] horasSalida; 
+   private LocalTime[] horasEntrada;
+   private Nodo_Empleado siguiente;
+
+    public Nodo_Empleado(int id, String nombre, String cargo, Float bono, Float descuento, LocalTime[] horasSalida, LocalTime[] horasEntrada) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cargo = cargo;
+        this.bono = bono;
+        this.descuento = descuento;
+        this.horasSalida = horasSalida;
+        this.horasEntrada = horasEntrada;
+        this.siguiente = null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public Float getBono() {
+        return bono;
+    }
+
+    public void setBono(Float bono) {
+        this.bono = bono;
+    }
+
+    public Float getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Float descuento) {
+        this.descuento = descuento;
+    }
+
+    public LocalTime[] getHorasSalida() {
+        return horasSalida;
+    }
+
+    public void setHorasSalida(LocalTime[] horasSalida) {
+        this.horasSalida = horasSalida;
+    }
+
+    public LocalTime[] getHorasEntrada() {
+        return horasEntrada;
+    }
+
+    public void setHorasEntrada(LocalTime[] horasEntrada) {
+        this.horasEntrada = horasEntrada;
+    }
+    
+    public Nodo_Empleado getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo_Empleado siguiente) {
+        this.siguiente = siguiente;
+    }
+
+    @Override
+    public String toString() {
+        return "Nodo_Empleado{" + "id=" + id + ", nombre=" + nombre + ", cargo=" + cargo + ", bono=" + bono + ", descuento=" + descuento + ", horasSalida=" + Arrays.toString(horasSalida) + ", horasEntrada=" + Arrays.toString(horasEntrada) + '}';
+    }
+}
