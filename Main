@@ -56,7 +56,7 @@ public class Reursos_Humanos {
         
         Empleado empleado = new Empleado(); 
         
-        System.out.println("Bienvenido");
+        System.out.println("Bienvenido ");
         do{
         System.out.println("Menu \n 1.Ingresar datos  \n 2. Mostrar entradas y salidas \n 3. Mostrar bonos \n 4. Mostrar descuentos \n 5. Salir ");
         opcionEmpleado = scanner.nextInt();
