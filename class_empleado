@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Empleado { 
     private Nodo_Empleado inicio;
     private Nodo_Empleado fin;
-
+ 
     public Empleado() {
         this.inicio = null;
         this.fin = null;
