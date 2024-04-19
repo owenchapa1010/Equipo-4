@@ -1,0 +1,93 @@
+package reursos_humanos;
+
+import java.util.Scanner;
+
+public class Reursos_Humanos {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int usuario;
+        Empleado empleado = new Empleado(); // Crear una instancia de Empleado para usar la misma lista en ambas funciones
+        
+        do{
+            System.out.println("Bienvenido al sistema de RRHH \n Seleccione el tipo de usuario: \n 1. Administrador \n 2. Empleado \n 3. Salir");
+            usuario = scanner.nextInt();
+            
+            switch(usuario){
+                case 1 -> loginAdministrador(empleado);
+                case 2 -> loginEmpleado(empleado);
+                case 3 -> System.out.println("Adios");
+                default -> System.out.println("Opción no válida");
+            }
+        } while(usuario != 3);
+    }
+    
+    private static void loginAdministrador(Empleado empleado){
+         
+        Scanner scanner = new Scanner(System.in);
+        
+        int opcionAdmin;
+        
+        System.out.print("Ingrese su nombre de usuario de administrador: ");
+        String usuarioAdmin = scanner.nextLine();
+        System.out.print("Ingrese su contrasena: ");
+        int contrasenaAdmin = scanner.nextInt();
+        
+        if(usuarioAdmin.equals("Amiel") && contrasenaAdmin == 741258963) {
+            do{
+            System.out.println("Bienvenido, Administrador \n Menu \n 1. Ingresar usuario \n 2. Registrar Entrada/Salida \n 3. Calcular bonos y descuentos \n 4. Mostrar bonos y descuentos \n 5. Mostrar asistencias \n 6. Mostrar empleado por ID  \n 7. Imprimir Registro \n 8. Salir");
+            opcionAdmin = scanner.nextInt();
+            
+            switch (opcionAdmin) {
+                case 1 -> empleado.registrarEmpleado();
+                case 2 ->  {
+                System.out.println("Ingresa tu Id");
+                int IdEmpleado = scanner.nextInt();
+                empleado.registrarEntradaOSalidaPorID(IdEmpleado);
+            }
+                case 3 -> empleado.calcularBonosYDescuentos();
+                case 4 -> empleado.imprimirBonosYDescuentos();
+                case 5 -> empleado.imprimirEntradasYSalidas();
+                case 6 -> {
+                System.out.println("Ingresa tu Id");
+                int IdEmpleado = scanner.nextInt();
+                empleado.mostrarHorariosPorID(IdEmpleado);
+            }
+                case 7 -> empleado.mostrarListaEmpleados();
+                case 8 -> System.out.println("Adios");
+                default -> System.out.println("Opción no válida");
+            }
+            }while(opcionAdmin != 8);
+        }else{
+            System.out.print("Nombre de usuario o contrasena incorrectos. \n Intentelo de nuevo \n");
+        }
+    }
+    
+    private static void loginEmpleado(Empleado empleado){
+        Scanner scanner = new Scanner(System.in);
+        
+        int opcionEmpleado;
+        
+        System.out.println("Bienvenido");
+        do{
+        System.out.println("Menu \n 1. Mostrar entradas y salidas \n 2. Mostrar bonos y descuentos \n 3. Salir ");
+        opcionEmpleado = scanner.nextInt();
+        
+        switch (opcionEmpleado) {
+            case 1 -> {
+                System.out.println("Ingresa tu Id");
+                int IdEmpleado = scanner.nextInt();
+                empleado.mostrarHorariosPorID(IdEmpleado);
+            }
+            case 2 ->  {
+                System.out.println("Ingresa tu Id");
+                int IdEmpleado = scanner.nextInt();
+                empleado.mostrarBonosYDescuentosPorID(IdEmpleado);
+            }
+            case 3 -> System.out.println("Adios");
+            default -> System.out.println("Opción no válida");
+            }
+        }while(opcionEmpleado != 3);
+    }
+}
